@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#15181C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GFC Drills">
+<meta name="description" content="Guildford FC: defending the space in behind. Open/Closed ball and Recovery race drills.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2315181C'/%3E%3Ccircle cx='32' cy='32' r='17' fill='%2300E0C6'/%3E%3Ctext x='32' y='38' text-anchor='middle' font-family='Arial' font-weight='900' font-size='15' fill='%2315181C'%3EGFC%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%2315181C'/%3E%3Ccircle cx='90' cy='90' r='52' fill='%2300E0C6'/%3E%3Ctext x='90' y='106' text-anchor='middle' font-family='Arial' font-weight='900' font-size='44' fill='%2315181C'%3EGFC%3C/text%3E%3C/svg%3E">
+<title>GFC Drills: Defending In Behind</title>
+<style>
+/* VOICE: pitchside broadcast graphic, firm and readable in one glance on a phone
+   IDEA: a tactics-cam replay you thumb through like stories, call word stamped on the pitch
+   PICTURE: full-width animated half pitch, tokens scaled up on small screens
+   COLOUR and TYPE: graphite #15181C, GFC teal #00E0C6, white opponents, red for the wrong way; Calibri/Helvetica
+   LAYOUT: sticky top switcher, pitch, phase text, accordions; fixed thumb bar at the bottom */
+:root{color-scheme:dark;--bg:#15181C;--panel:#1D2126;--line:#2C3239;--ink:#EEF2F4;--mut:#9AA4AE;--teal:#00E0C6;--red:#FF4D5A;--yel:#FFC53D;--sb:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;min-width:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Calibri,"Helvetica Neue",Helvetica,Arial,sans-serif;overflow-x:clip;padding-bottom:calc(132px + var(--sb))}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+.top{position:sticky;top:0;z-index:5;background:rgba(21,24,28,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:calc(env(safe-area-inset-top,0px) + 10px) max(14px,env(safe-area-inset-right)) 10px max(14px,env(safe-area-inset-left))}
+.top .in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.home{color:var(--mut);text-decoration:none;font-weight:700;font-size:15px;min-height:44px;display:flex;align-items:center;padding-right:4px}.home:hover{color:var(--teal)}.brand{font-weight:800;font-size:17px;flex:1 1 auto}.brand b{color:var(--teal)}
+.seg{display:flex;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:3px;flex:1 1 300px;max-width:420px}
+.seg button{flex:1;min-height:40px;border:0;border-radius:999px;background:transparent;font-weight:700;font-size:15px;color:var(--mut);white-space:nowrap}
+.seg button[aria-selected=true]{background:var(--teal);color:#0B1014}
+main{max-width:1180px;margin:0 auto;padding:14px max(12px,env(safe-area-inset-left)) 0}
+.grid{display:grid;gap:16px}
+.pitchbox{position:relative;background:#0F1513;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.45);touch-action:pan-y}
+.pitchbox svg{display:block;width:100%;height:auto}
+.call{position:absolute;left:10px;top:10px;font-size:clamp(18px,5.4vw,32px);font-weight:900;line-height:1;padding:8px 12px;border-radius:9px;background:var(--teal);color:#0B1014;box-shadow:0 6px 16px rgba(0,0,0,.4);pointer-events:none}
+.call.bad{background:var(--red);color:#fff}.call:empty{display:none}
+.cnt{position:absolute;right:10px;top:10px;font-size:13px;font-weight:800;background:rgba(0,0,0,.55);padding:5px 9px;border-radius:999px;pointer-events:none}
+.hint{color:#6E7781}
+.phase h2{margin:2px 0 4px;font-size:clamp(21px,5.6vw,28px);line-height:1.15}
+.phase p{margin:0;color:#D6DCE1;font-size:17px}
+.tag{display:inline-block;font-size:13px;font-weight:800;color:var(--mut);margin-bottom:2px}
+.tag.good{color:var(--teal)}.tag.bad{color:var(--red)}
+details{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-top:10px}
+summary{list-style:none;min-height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-weight:800;font-size:17px;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--teal);font-size:24px;font-weight:400}
+details[open] summary::after{content:"–"}
+.dc{padding:0 16px 16px}.dc ul,.dc ol{margin:0;padding-left:20px}.dc li{margin:5px 0}
+dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px}dt{color:var(--mut)}dd{margin:0}
+.plist{list-style:none;padding:0!important;display:grid;gap:4px}
+.plist button{width:100%;text-align:left;min-height:44px;padding:6px 10px;border:0;border-radius:8px;background:transparent;color:var(--mut);display:flex;gap:10px;align-items:center}
+.plist button .d{width:10px;height:10px;border-radius:50%;background:#3A424B;flex:none}
+.plist button.good .d{background:var(--teal)}.plist button.bad .d{background:var(--red)}
+.plist button.act{background:#262B31;color:var(--ink);font-weight:700}
+.key{display:flex;flex-wrap:wrap;gap:12px;font-size:14px;color:var(--mut);margin-top:12px}
+.key span{display:flex;align-items:center;gap:6px}.key i{width:13px;height:13px;border-radius:50%}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.actions button{min-height:46px;padding:0 16px;border-radius:10px;border:1px solid var(--teal);background:transparent;color:var(--teal);font-weight:700}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:6;background:rgba(21,24,28,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:8px max(12px,env(safe-area-inset-right)) calc(10px + var(--sb)) max(12px,env(safe-area-inset-left))}
+.bar .in{max-width:640px;margin:0 auto}
+.prog{display:flex;gap:4px;height:28px;align-items:center}
+.prog button{flex:1;height:28px;border:0;background:transparent;padding:0;display:flex;align-items:center}
+.prog button span{display:block;width:100%;height:5px;border-radius:3px;background:#343A41;overflow:hidden}
+.prog button span i{display:block;height:100%;width:0;background:var(--teal)}
+.prog button.bad span i{background:var(--red)}
+.ctrl{display:grid;grid-template-columns:1fr 1.4fr 1fr 1fr;gap:8px;margin-top:6px}
+.ctrl button{min-height:50px;border-radius:12px;border:1px solid var(--line);background:#262B31;font-weight:800;font-size:16px}
+.ctrl #play{background:var(--teal);color:#0B1014;border-color:var(--teal)}
+@media(min-width:900px){.grid{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);align-items:start}.hint{display:none}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="home" href="/" aria-label="All drills">‹ Drills</a><div class="brand"><b>GFC</b> Defending in behind</div>
+  <div class="seg" role="tablist">
+    <button role="tab" data-d="oc">Open / Closed</button>
+    <button role="tab" data-d="rr">Recovery race</button>
+  </div>
+</div></header>
+
+<main>
+<div class="grid">
+  <section>
+    <div class="pitchbox" id="pbox">
+      <svg id="pitch" viewBox="0 0 856 670" role="img" aria-label="Animated drill diagram"></svg>
+      <div class="call" id="call"></div>
+      <div class="cnt" id="cnt"></div>
+      
+    </div>
+    <div class="phase" aria-live="polite" style="margin-top:14px">
+      <span class="tag" id="tag"></span>
+      <h2 id="pname"></h2>
+      <p id="ptxt"></p>
+    </div>
+    <div class="key">
+      <span><i style="background:#00E0C6"></i>GFC</span><span><i style="background:#3EA8FF"></i>Keeper</span>
+      <span><i style="background:#EDEFF2"></i>Strikers</span><span><i style="background:#FFC53D"></i>Feeders / coach</span><span class="hint">Swipe the pitch to step</span>
+    </div>
+  </section>
+  <section id="info"></section>
+</div>
+<div class="actions">
+  <button id="copy">Copy coaching points</button>
+  <button id="wake">Keep screen on</button>
+</div>
+</main>
+
+<nav class="bar" aria-label="Replay controls"><div class="in">
+  <div class="prog" id="prog"></div>
+  <div class="ctrl">
+    <button id="prev" aria-label="Previous phase">◀</button>
+    <button id="play">Pause</button>
+    <button id="next" aria-label="Next phase">▶</button>
+    <button id="spd">1×</button>
+  </div>
+</div></nav>
+
+<script>
+{
+const NS='http://www.w3.org/2000/svg';
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const L=4;
+const lineIds=['d2','d5','d6','d3'];
+const OC_INIT={gk:[428,62,90],d2:[200,330,90],d5:[350,330,90],d6:[506,330,90],d3:[656,330,90],a9:[330,348,-90],a10:[440,352,-90],a11:[570,346,-90],p8:[300,520,90],s:[428,612,-90]};
+const D={
+oc:{hash:'open-closed',name:'Open / Closed: GK+4+1 v 3+2',line:lineIds,ball:[312,582],
+ ents:{gk:['gk','1'],d2:['gfc','2'],d5:['gfc','5'],d6:['gfc','6'],d3:['gfc','3'],h4:['gfc','4'],a7:['opp','7'],a9:['opp','9'],a11:['opp','11'],f8:['srv','8'],f10:['srv','10']},
+ init:{gk:[428,62,90],d2:[196,330,90],d5:[350,330,90],d6:[506,330,90],d3:[660,330,90],h4:[470,452,90],a7:[236,352,-90],a9:[420,356,-90],a11:[624,352,-90],f8:[300,600,-90],f10:[560,600,-90]},
+ statics:'<rect x="70" y="636" width="70" height="10" fill="#FF8A3D" opacity=".85"/><rect x="716" y="636" width="70" height="10" fill="#FF8A3D" opacity=".85"/><text x="105" y="628" text-anchor="middle" fill="#FF8A3D" font-size="20" font-weight="800">Gate</text><text x="751" y="628" text-anchor="middle" fill="#FF8A3D" font-size="20" font-weight="800">Gate</text>',
+ phases:[
+  {n:'Set up',call:'',tone:'neutral',txt:'GK + back four + holding midfielder (4) against three attackers and two feeders (8 and 10). The feeders start on halfway, play the ball, then join the attack. The line starts about 25 yards out.',dur:1600},
+  {n:'Closed ball: 4 presses the feeder',call:'UP!',tone:'good',txt:'Holding mid gets tight to 8. He is turned and can\'t look forward, so the ball is closed. CB calls UP, all four step together and the runners are left offside. 8 can only go sideways.',
+   pos:{h4:[322,552,-120],f8:[300,606,90],d2:[196,390],d5:[350,390],d6:[506,390],d3:[660,390]},ball:[548,588,.6],
+   arrows:[[470,452,330,546,'grun'],[312,582,548,588,'pass']],marks:[{k:'ring',ids:['a7','a9','a11'],at:.45},{k:'lab',x:700,y:300,s:'OFFSIDE',c:'red',at:.6}]},
+  {n:'Switch to 10: open ball',call:'DROP!',tone:'good',txt:'10 receives facing forward with nobody on him. Open ball. The line drops before he can kick it, and 4 recovers to screen the middle.',
+   pos:{f10:[560,592,-90],d2:[210,252],d5:[356,252],d6:[500,252],d3:[646,252],h4:[452,446,90],a7:[250,300,-90],a9:[424,306,-90],a11:[600,300,-90],gk:[428,98]},
+   arrows:[[322,552,452,446,'grun'],[350,390,356,262,'grun'],[506,390,500,262,'grun']],marks:[{k:'halo',id:'f10',at:.05},{k:'lab',x:620,y:520,s:'Head up · time on the ball',c:'yel',at:.1}]},
+  {n:'Over the top: keeper sweeps',call:'KEEPER!',tone:'good',txt:'10 goes over the top for 11 in the channel. The line has already dropped, so 6 and 3 turn and run, and the keeper starts high and claims. The feeders join the attack, but too late.',
+   pos:{a11:[532,200,-100],d6:[492,188,-90],d3:[606,214,-100],d5:[392,214,-90],d2:[252,230,-90],a9:[430,236,-90],a7:[270,250,-90],gk:[474,150,90,.3],f8:[320,470,-90],f10:[540,520,-90]},ball:[478,160,.12],
+   arrows:[[548,588,478,160,'pass'],[600,300,536,206,'run'],[428,98,472,146,'grun']],marks:[{k:'lab',x:640,y:130,s:'Keeper claims',c:'teal',at:.8}]},
+  {n:'Reset',call:'',tone:'neutral',txt:'Back to the start. Now the second pattern: 9 drops to feet to bounce it back.',reset:1,dur:1200},
+  {n:'9 drops to feet',call:'STEP IN',tone:'good',txt:'9 drops short. Nearest CB (5) follows him in tight so he can\'t turn, and 4 sandwiches from the front. The other three squeeze across to fill the gap 5 has left.',
+   pos:{a9:[420,438,90],d5:[418,398,90],h4:[452,474,-110],d6:[470,312],d2:[250,312],d3:[610,318],f10:[548,560,-90]},ball:[412,452,.35],
+   arrows:[[420,356,420,428,'run'],[350,330,412,392,'grun'],[312,582,412,452,'pass'],[506,330,470,318,'grun']],marks:[{k:'lab',x:180,y:420,s:'Follow him in',c:'teal',at:.55},{k:'lab',x:640,y:250,s:'Squeeze across',c:'teal',at:.55}]},
+  {n:'Bounce back = open ball',call:'DROP!',tone:'good',txt:'9 lays it back to 10, who is now facing forward with time. The lay-off is the trigger: the line drops straight away, 5 recovers goal-side and 4 gets out to 10.',
+   pos:{f10:[548,548,-90],d2:[244,240,-90],d6:[454,236,-90],d3:[612,248],d5:[410,320,-90],h4:[492,494,40],a7:[284,292,-60],a11:[590,288,-90],gk:[428,96]},ball:[540,530],
+   arrows:[[412,452,540,530,'pass'],[236,352,284,296,'run']],marks:[{k:'halo',id:'f10',at:.2},{k:'lab',x:180,y:420,s:'Lay-off = trigger',c:'yel',at:.3}]},
+  {n:'Runner in behind: snuffed out',call:'KEEPER!',tone:'good',txt:'7 makes the run off the bounce into the space 5 left. Because the line dropped on the lay-off, 2 and 6 are goal-side and the keeper is already out to claim.',
+   pos:{a7:[330,202,-90],d2:[296,184,-90],d6:[372,180,-90],gk:[340,128,90,.3],a9:[430,330,-90],f8:[340,480,-90]},ball:[338,148,.12],
+   arrows:[[540,530,338,148,'pass'],[284,292,330,206,'run']],marks:[{k:'lab',x:600,y:130,s:'Runner tracked',c:'teal',at:.8}]},
+  {n:'Reset',call:'',tone:'neutral',txt:'Back to the start. Now see the drop defended wrong.',reset:1,dur:1200},
+  {n:'Wrong: 5 follows, nobody covers',call:'GAP',tone:'bad',txt:'9 drops and 5 follows him, but the other three stay flat and wide and 4 doesn\'t screen. There is now a hole in the middle of the back four.',
+   pos:{a9:[420,438,90],d5:[418,398,90],f10:[548,560,-90]},ball:[412,452,.35],
+   arrows:[[420,356,420,428,'run'],[312,582,412,452,'pass']],marks:[{k:'lab',x:428,y:300,s:'Hole',c:'red',at:.55}]},
+  {n:'Bounce and the line holds',call:'TOO LATE',tone:'bad',txt:'9 bounces it back to 10, who has time. Nobody calls the drop. 7 is already running into the hole.',
+   pos:{f10:[548,548,-90],a7:[330,300,-60,.2],a11:[590,300,-90]},ball:[540,530],
+   arrows:[[412,452,540,530,'pass'],[236,352,330,304,'run']],marks:[{k:'halo',id:'f10',at:.2}]},
+  {n:'In behind: 1v1 with the keeper',call:'GOAL',tone:'bad',txt:'Through ball into the hole and 7 is clean through. This is the goal you keep conceding: no cover on the drop and no drop on the bounce.',
+   pos:{a7:[414,150,-90],d6:[480,262,-110,.4],d5:[410,360,-90,.4],gk:[428,82,90,.5]},ball:[410,140,.1],
+   arrows:[[540,530,410,140,'pass'],[330,300,414,156,'run']],marks:[{k:'lab',x:640,y:150,s:'1v1 with the keeper',c:'red',at:.7}]}
+ ],
+ info:{
+  setup:[['Area','Halfway to goal, full width. Two counter gates on halfway'],['GFC','GK + back four + holding midfielder (4)'],['Opposition','3 attackers + 2 feeders who play, then join the attack'],['Kit','Balls with the feeders, cones for the start line about 25 yards out, 2 gates'],['Time','20 min: 4 × 4 min, 1 min rest']],
+  run:['Feeders start on halfway with the ball. Line sets about 25 yards out.','Feeders choose: over the top, into a dropping striker, or switch to the other feeder.','Once a feeder has played, he joins the attack.','Defence reads every pass. Closed ball: UP. Open ball: DROP. Striker drops: nearest CB follows, the rest cover.','Live until a goal, the keeper claims, it goes out, or the defence wins it and counters through a gate.'],
+  score:['Attack: 3 for a goal from a runner in behind, 2 for any other goal, 1 for receiving onside in behind','Defence: 1 for catching a runner offside, 2 for claiming a ball in behind, 3 for winning it and scoring through a counter gate'],
+  points:['Read the passer, not the runner','Ball back to a player facing forward is an open ball: DROP','Striker drops: nearest CB follows him in tight so he can\'t turn, but only if cover is on','The other three squeeze across and fill the gap. No flat, wide line','Holding mid presses the feeder to close the ball, and screens the pass into the dropping striker','One voice calls UP / DROP','Track runners off the bounce. Nobody ball-watches','Keeper\'s starting position moves with the line'],
+  prog:['Feeders go two-touch, then one-touch','Add a fourth attacker','Take the holding midfielder out so the back four handle the drop alone','Feeders allowed to dribble forward before they pass']}
+},
+rr:{hash:'recovery-race',name:'Recovery race',line:null,ball:[428,592],
+ ents:{gk:['gk','1'],d5:['gfc','5'],a9:['opp','9'],c:['srv','C']},
+ init:{gk:[428,62,90],d5:[398,380,160],a9:[458,380,90],c:[428,612,-90]},
+ statics:'<rect x="600" y="20" width="236" height="320" fill="rgba(0,224,198,.07)" stroke="rgba(0,224,198,.35)" stroke-dasharray="6 6"/><text x="718" y="326" text-anchor="middle" fill="rgba(0,224,198,.75)" font-size="15" font-weight="700">Shepherd zone</text>'+[[366,380],[490,380]].map(c=>`<path d="M${c[0]-8} ${c[1]+8}L${c[0]} ${c[1]-9}L${c[0]+8} ${c[1]+8}Z" fill="#FF8A3D"/>`).join(''),
+ phases:[
+  {n:'Set up',call:'',tone:'neutral',txt:'Defender and striker start level, 2 yards apart, 30 yards from goal. The coach serves from halfway. Defender starts side-on.',dur:1500,marks:[{k:'lab',x:300,y:430,s:'Side-on',c:'teal',at:0}]},
+  {n:'Ball over the top',call:'GO!',tone:'good',txt:'Side-on means one step and he\'s away. The striker has to turn right round, so the defender gets first move.',
+   pos:{d5:[452,246,-90,.04],a9:[490,262,-90,.14]},ball:[486,190],
+   arrows:[[428,592,486,190,'pass'],[398,376,450,252,'grun'],[458,376,488,268,'run']]},
+  {n:'Goal-side, then face up',call:'SHOW WIDE',tone:'good',txt:'Get between him and the goal first, then turn to face him. Show him the touchline, away from goal.',
+   pos:{d5:[508,176,40],a9:[552,198,-70]},ball:[546,178],arrows:[[512,182,600,170,'grun']]},
+  {n:'Force it out',call:'NO SHOT',tone:'good',txt:'Stays on his feet and never dives in. He runs the striker into the shepherd zone, and the ball goes out or he nicks it.',
+   pos:{d5:[690,104,20],a9:[704,140,-20]},ball:[850,96,.45],arrows:[[552,198,700,140,'run']],marks:[{k:'lab',x:560,y:80,s:'Job done',c:'teal',at:.7}]},
+  {n:'Reset: square start',call:'',tone:'neutral',txt:'Same race, but the defender starts square-on to the coach.',reset:1,pos:{d5:[398,380,90]},dur:1300,marks:[{k:'lab',x:300,y:430,s:'Square',c:'red',at:.3}]},
+  {n:'The yard you lose',call:'TOO SLOW',tone:'bad',txt:'He has to turn right round and loses a yard before he moves. Against pace, that yard is the goal.',
+   pos:{d5:[440,300,-90,.36],a9:[490,262,-90,.14]},ball:[486,190],
+   arrows:[[428,592,486,190,'pass']],marks:[{k:'lab',x:660,y:420,s:'+1 yard lost on the turn',c:'red',at:.55}]},
+  {n:'Through on goal',call:'GOAL',tone:'bad',txt:'Striker is goal-side first. Defender is chasing his back and the keeper is one-on-one.',
+   pos:{a9:[458,150,-100],d5:[478,214,-90],gk:[430,80,90]},ball:[440,16,.6],arrows:[[456,146,440,22,'shot']]}
+ ],
+ info:{
+  setup:[['Area','About 35 × 30 yards from halfway into the box'],['Players','Pairs (1 defender v 1 striker), GK, coach serving'],['Kit','Balls, 2 start cones, cones marking a wide channel'],['Time','10 min, about 6 reps each, swap roles']],
+  run:['Pair start level, 2 yards apart, 30 yards out.','Coach serves over the top, mixing it up: straight, into the channel, bouncing.','Both race. Defender gets goal-side, then shows him wide.','Rep ends on a shot, ball out, or the defender wins it.','Three reps side-on, one or two square so they feel it, then back to side-on.'],
+  score:['Striker: 2 for a goal, 1 for a shot on target','Defender: 1 for getting goal-side, 2 for forcing it out or winning it clean'],
+  points:['Start side-on, weight on the front foot, ball and runner both in view','First step is a drop step. Turn the hips, not just the shoulders','Get across the line of the ball first, then goal-side','Stay on your feet. No diving in','Show him the touchline, never inside','Keeper talking: KEEPER or AWAY'],
+  prog:['Striker gets a 2-yard head start','Add a covering CB to make it 2v1: one steps, one covers','Serve from wider angles into the channel','Add a midfielder recovering to help']}
+}};
+
+const pitch=document.getElementById('pitch');
+const stripes=Array.from({length:10},(_,i)=>`<rect x="0" y="${i*67}" width="856" height="67" fill="${i%2?'#1A2B24':'#1E3129'}"/>`).join('');
+const W='stroke="rgba(255,255,255,.55)" stroke-width="2" fill="none"';
+const mk=(id,c)=>`<marker id="${id}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="${c}"/></marker>`;
+pitch.innerHTML=`<defs>${mk('m-run','#fff')}${mk('m-grun','#00E0C6')}${mk('m-pass','#FFC53D')}${mk('m-shot','#FF4D5A')}<radialGradient id="vig" cx="50%" cy="40%" r="75%"><stop offset="60%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".45"/></radialGradient></defs>
+${stripes}<rect width="856" height="670" fill="url(#vig)"/>
+<g ${W}><rect x="20" y="20" width="816" height="630"/><rect x="186" y="20" width="484" height="198"/><rect x="318" y="20" width="220" height="66"/>
+<path d="M346 218A110 110 0 0 0 510 218"/><path d="M318 650A110 110 0 0 1 538 650"/><path d="M20 32A12 12 0 0 0 32 20M824 20A12 12 0 0 0 836 32"/></g>
+<rect x="384" y="6" width="88" height="14" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.7)" stroke-width="2"/>
+<circle cx="428" cy="152" r="3" fill="rgba(255,255,255,.6)"/><circle cx="428" cy="650" r="4" fill="rgba(255,255,255,.6)"/>
+<g id="st"></g><g id="dyn"></g>`;
+const st=document.getElementById('st'),dyn=document.getElementById('dyn');
+const FILL={gfc:['#00E0C6','#0B1014'],gk:['#3EA8FF','#0B1014'],opp:['#EDEFF2','#15181C'],srv:['#FFC53D','#15181C']};
+const LC={red:'#FF4D5A',teal:'#00E0C6',yel:'#FFC53D'};
+const clone=o=>JSON.parse(JSON.stringify(o));
+const ease=k=>k<.5?2*k*k:1-((-2*k+2)**2)/2;
+const cl=v=>Math.max(0,Math.min(1,v));
+const $=id=>document.getElementById(id);
+let cur='oc',S=[],idx=0,t=0,hold=0,playing=!RM,speed=1,last=0,Z=1;
+const sizeZ=()=>{const w=pitch.clientWidth||856;Z=Math.max(1,Math.min(1.9,(856/w)*.62));};
+const ro=new ResizeObserver(sizeZ);ro.observe(pitch);
+function build(d){let prev={pos:clone(d.init),ball:d.ball.slice()};
+  S=d.phases.map(ph=>{const end=ph.reset?{pos:clone(d.init),ball:d.ball.slice()}:clone(prev);
+    for(const k in ph.pos||{}){const v=ph.pos[k],b=end.pos[k];end.pos[k]=[v[0],v[1],v[2]??b[2]];}
+    if(ph.ball)end.ball=[ph.ball[0],ph.ball[1]];
+    const s={start:clone(prev),end};prev=end;return s;});}
+const lerpA=(a,b,k)=>a+(((b-a+540)%360)-180)*k;
+function arrow(a){const [x1,y1,x2,y2,k]=a,col={run:'#fff',grun:'#00E0C6',pass:'#FFC53D',shot:'#FF4D5A'}[k];
+  let d=`M${x1} ${y1}L${x2} ${y2}`;
+  if(k==='pass'){const mx=(x1+x2)/2,my=(y1+y2)/2,dx=x2-x1,dy=y2-y1,len=Math.hypot(dx,dy)||1;d=`M${x1} ${y1}Q${mx-dy/len*60} ${my+dx/len*60} ${x2} ${y2}`;}
+  return `<path d="${d}" stroke="${col}" stroke-width="${(k==='shot'?3.5:2.6)*Z}" fill="none" ${k.includes('run')?`stroke-dasharray="${8*Z} ${7*Z}"`:''} marker-end="url(#m-${k})" stroke-linecap="round"/>`;}
+function token(x,y,f,type,n){const [bg,fg]=FILL[type],r=17*Z,a=f*Math.PI/180,p=(rad,ang)=>`${(x+Math.cos(ang)*rad).toFixed(1)},${(y+Math.sin(ang)*rad).toFixed(1)}`;
+  return `<ellipse cx="${x+3*Z}" cy="${y+6*Z}" rx="${r}" ry="${r*.7}" fill="rgba(0,0,0,.38)"/>
+  <polygon points="${p(r-3,a-.5)} ${p(r+9*Z,a)} ${p(r-3,a+.5)}" fill="${bg}"/>
+  <circle cx="${x}" cy="${y}" r="${r}" fill="${bg}" stroke="rgba(0,0,0,.35)" stroke-width="1.5"/>
+  <circle cx="${x-5*Z}" cy="${y-6*Z}" r="${r*.45}" fill="rgba(255,255,255,.22)"/>
+  <text x="${x}" y="${y+5*Z}" text-anchor="middle" font-size="${(n.length>1?13:15)*Z}" font-weight="800" fill="${fg}">${n}</text>`;}
+function draw(){const d=D[cur],ph=d.phases[idx],{start,end}=S[idx];let h='';
+  if(ph.arrows)h+=`<g opacity="${cl(t*4)*.9}">${ph.arrows.map(arrow).join('')}</g>`;
+  const P={};
+  for(const id in d.ents){const s=start.pos[id],e=end.pos[id],dl=(ph.pos&&ph.pos[id]&&ph.pos[id][3])||0,k=ease(cl((t-dl)/(1-dl||1)));
+    P[id]=[s[0]+(e[0]-s[0])*k,s[1]+(e[1]-s[1])*k,lerpA(s[2],e[2],k)];}
+  if(d.line){const pts=d.line.map(i=>P[i]).sort((a,b)=>a[0]-b[0]),ly=Math.min(...pts.map(p=>p[1]));
+    h+=`<line x1="20" y1="${ly}" x2="836" y2="${ly}" stroke="#00E0C6" stroke-width="${2*Z}" stroke-dasharray="${4*Z} ${8*Z}" opacity=".75"/>
+    <text x="30" y="${ly-8*Z}" fill="#00E0C6" font-size="${14*Z}" font-weight="800">Line</text>
+    <polyline points="${pts.map(p=>p[0]+','+p[1]).join(' ')}" fill="none" stroke="#00E0C6" stroke-width="${3*Z}" opacity=".35"/>`;}
+  const ms=(ph.marks||[]).filter(m=>t>=(m.at??.6));
+  for(const m of ms){if(m.k==='ring')for(const id of m.ids)h+=`<circle cx="${P[id][0]}" cy="${P[id][1]}" r="${25*Z}" fill="none" stroke="#FF4D5A" stroke-width="${3*Z}"/>`;
+    if(m.k==='halo')h+=`<circle cx="${P[m.id][0]}" cy="${P[m.id][1]}" r="${(27+Math.sin(performance.now()/180)*3)*Z}" fill="rgba(255,197,61,.14)" stroke="#FFC53D" stroke-width="${2*Z}"/>`;}
+  for(const id of Object.keys(d.ents).sort((a,b)=>P[a][1]-P[b][1])){const [type,n]=d.ents[id];h+=token(P[id][0],P[id][1],P[id][2],type,n);}
+  const bd=(ph.ball&&ph.ball[2])||0,bk=ease(cl((t-bd)/(1-bd||1))),bx=start.ball[0]+(end.ball[0]-start.ball[0])*bk,by=start.ball[1]+(end.ball[1]-start.ball[1])*bk;
+  const lift=ph.arrows&&ph.arrows.some(a=>a[4]==='pass')&&bk>0&&bk<1?Math.sin(bk*Math.PI)*14:0;
+  h+=`<ellipse cx="${bx+2}" cy="${by+4}" rx="${6*Z}" ry="${4*Z}" fill="rgba(0,0,0,.4)"/><circle cx="${bx}" cy="${by-lift}" r="${(7+lift*.25)*Z}" fill="#fff" stroke="#15181C" stroke-width="1.5"/>`;
+  for(const m of ms)if(m.k==='lab'){const fs=15*Z,w=m.s.length*fs*.56+20*Z,hh=30*Z,x=Math.min(Math.max(m.x-w/2,24),832-w),y=Math.min(Math.max(m.y,hh),640);
+    h+=`<rect x="${x}" y="${y-hh*.62}" width="${w}" height="${hh}" rx="${6*Z}" fill="${LC[m.c]}"/><text x="${x+w/2}" y="${y+fs*.3}" text-anchor="middle" font-size="${fs}" font-weight="800" fill="${m.c==='red'?'#fff':'#0B1014'}">${m.s}</text>`;}
+  dyn.innerHTML=h;
+  const segs=$('prog').querySelectorAll('i');segs.forEach((s,i)=>s.style.width=(i<idx?100:i===idx?t*100:0)+'%');}
+function panel(){const d=D[cur],ph=d.phases[idx];
+  $('cnt').textContent=`${idx+1} / ${d.phases.length}`;
+  const c=$('call');c.textContent=ph.call;c.className='call '+ph.tone;
+  const tg=$('tag');tg.textContent=ph.tone==='good'?'Right way':ph.tone==='bad'?'Wrong way':'Set up';tg.className='tag '+ph.tone;
+  $('pname').textContent=ph.n;$('ptxt').textContent=ph.txt;
+  document.querySelectorAll('.plist button').forEach((b,i)=>b.classList.toggle('act',i===idx));}
+function go(i){const n=D[cur].phases.length;idx=(i+n)%n;t=RM?1:0;hold=0;panel();draw();}
+function setDrill(k){cur=k;const d=D[k];build(d);st.innerHTML=d.statics||'';
+  document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-selected',b.dataset.d===k));
+  $('prog').innerHTML=d.phases.map((p,i)=>`<button class="${p.tone}" data-i="${i}" aria-label="Phase ${i+1}: ${p.n}"><span><i></i></span></button>`).join('');
+  const I=d.info,li=a=>a.map(x=>`<li>${x}</li>`).join('');
+  $('info').innerHTML=`<details open><summary>Phases</summary><div class="dc"><ol class="plist">${d.phases.map((p,i)=>`<li><button class="${p.tone}" data-i="${i}"><span class="d"></span>${i+1}. ${p.n}</button></li>`).join('')}</ol></div></details>
+  <details open><summary>Set-up</summary><div class="dc"><dl>${I.setup.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('')}</dl></div></details>
+  <details><summary>How it runs</summary><div class="dc"><ol>${li(I.run)}</ol></div></details>
+  <details><summary>Scoring</summary><div class="dc"><ul>${li(I.score)}</ul></div></details>
+  <details><summary>Coaching points</summary><div class="dc"><ul>${li(I.points)}</ul></div></details>
+  <details><summary>Progressions</summary><div class="dc"><ul>${li(I.prog)}</ul></div></details>`;
+  go(0);}
+function fromHash(){setDrill(location.hash.slice(1)==='recovery-race'?'rr':'oc');}
+document.querySelector('.seg').addEventListener('click',e=>{const b=e.target.closest('button');if(b)location.hash=D[b.dataset.d].hash;});
+addEventListener('hashchange',fromHash);
+const jump=e=>{const b=e.target.closest('button[data-i]');if(b)go(+b.dataset.i);};
+$('prog').addEventListener('click',jump);$('info').addEventListener('click',jump);
+$('prev').onclick=()=>go(idx-1);$('next').onclick=()=>go(idx+1);
+const setPlay=v=>{playing=v;$('play').textContent=v?'Pause':'Play';};
+$('play').onclick=()=>{if(!playing&&t>=1)go(idx+1);setPlay(!playing);};
+$('spd').onclick=()=>{speed=speed===1?.5:1;$('spd').textContent=speed+'×';};
+setPlay(playing);
+let sx=null,sy=0;const pb=$('pbox');
+pb.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+pb.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;
+  if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy))go(idx+(dx<0?1:-1));},{passive:true});
+pb.addEventListener('click',()=>setPlay(!playing));
+addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(idx+1);if(e.key==='ArrowLeft')go(idx-1);if(e.key===' '&&e.target===document.body){e.preventDefault();setPlay(!playing);}});
+$('copy').onclick=async()=>{const d=D[cur],txt=`GFC – ${d.name}\n\nCoaching points:\n`+d.info.points.map(p=>'• '+p).join('\n')+`\n\n${location.href}`;
+  try{await navigator.clipboard.writeText(txt);$('copy').textContent='Copied';}catch(e){$('copy').textContent='Copy not allowed here';}
+  setTimeout(()=>$('copy').textContent='Copy coaching points',2200);};
+let lock=null;
+$('wake').onclick=async()=>{try{if(lock){await lock.release();lock=null;$('wake').textContent='Keep screen on';return;}
+  lock=await navigator.wakeLock.request('screen');$('wake').textContent='Screen stays on ✓';lock.addEventListener('release',()=>{lock=null;$('wake').textContent='Keep screen on';});}
+  catch(e){$('wake').textContent='Not supported on this browser';}};
+function tick(ts){const dt=last?Math.min(ts-last,60):0;last=ts;
+  if(playing){const ph=D[cur].phases[idx];if(t<1)t=Math.min(1,t+dt*speed/(ph.dur||2800));else{hold+=dt*speed;if(hold>1700)go(idx+1);}}
+  draw();requestAnimationFrame(tick);}
+sizeZ();fromHash();requestAnimationFrame(tick);
+}
+</script>
+</body>
+</html>
